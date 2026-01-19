@@ -1,9 +1,9 @@
 #include "GameManager.h"
 #include "Game.h"
 #include "Utils.h" 
-#include "Battle.hpp"   // הוספתי כדי שהקוד יכיר את Battle
-#include "Shop.hpp"     // הוספתי כדי שהקוד יכיר את Shop
-#include "WildCard.hpp" // הוספתי כדי שהקוד יכיר את WildCard
+#include "Battle.hpp"   
+#include "Shop.hpp"     
+#include "WildCard.hpp" 
 
 #include <cstdlib> 
 #include <ctime>   
@@ -11,7 +11,7 @@
 
 using std::cout;
 using std::cin;
-using std::string; // הוספתי לנוחות
+using std::string; 
 
 GameManager::GameManager() : m_player(nullptr), m_currentFloor(1), m_isGameActive(true) {}
 
@@ -40,7 +40,6 @@ void GameManager::run() {
             m_isGameActive = false;
         }
         
-        // moving between floors
         else {
             bool movingOn = false;
             
@@ -52,18 +51,34 @@ void GameManager::run() {
                 char choice = input[0];
 
                 if (choice == 'i' || choice == 'I') {
-                    print_stats(m_player);
                     cout << "Stats: HP " << m_player->get_HP() << " | Gold " << m_player->get_coins() << "\n";
-                }
-                else if (choice == 'q' || choice == 'Q') {
-                    cout << "Coward. I expected nothing less. Leaving the tower...\n";
-                    m_isGameActive = false; 
-                    movingOn = true;
                 }
                 else if (choice == 'n' || choice == 'N') {
                     cout << "Marching on. Try not to trip.\n";
                     m_currentFloor++;
                     movingOn = true;
+                }
+                else if (choice == 'q' || choice == 'Q') {
+                    cout << "I have to ask...\n";
+                    while(true) {
+                        
+                        string confirmInput = get_string("Are you sure? (y/n)\n> ");
+                        char confirm = confirmInput[0]; 
+
+                        if (confirm == 'n' || confirm == 'N') {
+                            cout << "Stay with me then. We're having fun, aren't we?\n";
+                            break;
+                        }
+                        else if (confirm == 'y' || confirm == 'Y') {
+                            cout << "Every time someone quits this game, my ego grows bigger. IT HURTS!!\n\n";
+                            m_isGameActive = false; 
+                            movingOn = true;
+                            break; 
+                        }
+                        else {
+                            cout << "It's a simple yes or no question...\n";
+                        }
+                    }                    
                 }
                 else {
                     cout << "Unknown command.\n";
