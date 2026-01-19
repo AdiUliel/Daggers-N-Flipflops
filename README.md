@@ -1,3 +1,5 @@
+```text
+
 Game.cpp (Main)
    │
    ▼
@@ -19,7 +21,7 @@ GameManager (Controller)
            │            └──▶ Staff
            │
            ├──▶ Enemy
-           └──▶ Classes (Warrior, Mage, Thief)
+           └──▶ Classes (Warrior, Mage, Thief ...)
 
 Used Design Patters:
     - Singleton:
