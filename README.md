@@ -23,7 +23,7 @@ GameManager (Controller)
            ├──▶ Enemy
            └──▶ Classes (Warrior, Mage, Thief ...)
 
-Used Design Patters:
+Used Design Patterns:
     - Singleton:
         Game is a singleton, which is in my opinion very unnecessary at this point, but I applied it for practice purposes.
     - Strategy:
