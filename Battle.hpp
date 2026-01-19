@@ -7,7 +7,6 @@
 #include <iostream>
 
 using std::cout;
-using std::cin;
 using std::string;
 
 class Battle : public Encounter {
@@ -32,9 +31,10 @@ public:
                 attackName = "Use " + player->get_weapon()->get_name();
             }
 
-            cout << "1. " << attackName << "  2. Cry for help (Heal 20 MP)\n> ";
-            int choice;
-            cin >> choice;
+            cout << "1. " << attackName << "  2. Cry for help (Heal 20 MP)\n";
+            
+            int choice = get_int("> ");
+
 
             if (choice == 1) {
                 if (player->get_weapon() != nullptr) {
@@ -45,7 +45,8 @@ public:
                     cout << "You hit with your bare hands for " << dmg << " damage.\n";
                     enemy->damage(dmg);
                 }
-            } else if (choice == 2) {
+            } 
+            else if (choice == 2) {
                 if (player->get_MP() >= 20) {
                     player->set_MP(player->get_MP() - 20);
                     player->heal(30);
@@ -53,6 +54,9 @@ public:
                 } else {
                     cout << "Not enough MP. Fail.\n";
                 }
+            } 
+            else {
+                cout << "You just stand there in confusion. (Turn wasted)\n";
             }
 
             if (enemy->isKnockedOut()) {
@@ -64,7 +68,10 @@ public:
                 int dmg = enemy->attack();
                 cout << "Enemy hits you for " << dmg << ".\n";
                 player->damage(dmg);
-                if (player->isKnockedOut()) battleOver = true;
+                
+                if (player->isKnockedOut()) {
+                    battleOver = true;
+                }
             }
         }
         delete enemy;

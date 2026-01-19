@@ -3,8 +3,8 @@
 
 #include "Encounter.h"
 #include "Utils.h"
-#include "Bow.hpp"   // הוספה
-#include "Staff.hpp" // הוספה
+#include "Bow.hpp"
+#include "Staff.hpp"
 #include <iostream>
 
 using std::cout;
@@ -21,8 +21,7 @@ public:
         cout << "3. Mystic Staff (Mage)    - 100 Coins\n";
         cout << "4. Leave\n> ";
         
-        int choice;
-        cin >> choice;
+        int choice = get_int("> ");
 
         // --- קניית שיקוי ---
         if (choice == 1) {
@@ -60,5 +59,6 @@ public:
         }
     }
 };
+
 
 #endif

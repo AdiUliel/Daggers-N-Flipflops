@@ -4,7 +4,18 @@
 #include "Classes.h" 
 #include "Enemy.h"
 #include "Encounter.h" 
+#include "Battle.hpp"
+#include "Shop.hpp"
+#include "WildCard.hpp"
+#include <iostream>
+#include <limits>
 #include <string>
+
+
+using std::cout;
+using std::cin;
+using std::string;
+using std::endl;
 
 class GameManager {
 private:
@@ -15,12 +26,12 @@ private:
     void init_player();           
     void play_turn();             
 
-
 public:
     GameManager();
     ~GameManager(); 
 
     void run(); 
+    void reset_game();
 };
 
 #endif
