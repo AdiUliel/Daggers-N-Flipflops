@@ -45,4 +45,3 @@ Relevant UML Dynamics:
         - Weapon uses Charater (e.g in method 'use(Character* user, ... )').
         - Battle uses Enemy (in method 'run', Battle creates Enemy as a local variable).
         - GameManager uses Encounter (creates an encounter via Factory, uses it, and deletes it).
-
