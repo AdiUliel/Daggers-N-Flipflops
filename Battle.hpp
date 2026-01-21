@@ -28,7 +28,7 @@ public:
             
             string attackName = "Flail wildly (Attack)";
             if (player->get_weapon() != nullptr) {
-                attackName = "Use " + player->get_weapon()->get_name();
+                attackName = player->get_weapon()->get_action_name(player);
             }
 
             cout << "1. " << attackName << "  2. Cry for help (Heal 20 MP)\n";
@@ -38,7 +38,7 @@ public:
 
             if (choice == 1) {
                 if (player->get_weapon() != nullptr) {
-                    player->get_weapon()->use(player, enemy);
+                    player->get_weapon()->attack_action(player, enemy);
                 } 
                 else {
                     int dmg = random_int(player->get_power(), player->get_power() + 5);

@@ -47,11 +47,14 @@ void GameManager::run() {
 
             while (!movingOn) {
                 cout << "\n--- PAUSE MENU ---\n";
-                string input = get_string("OPTIONS: (i)nfo, (n)ext floor, (q)uit\n> ");
+                string input = get_string("OPTIONS: (i)nfo, (e)quipment, (n)ext floor, (q)uit\n> ");
                 char choice = input[0];
 
                 if (choice == 'i' || choice == 'I') {
-                    cout << "Stats: HP " << m_player->get_HP() << " | Gold " << m_player->get_coins() << "\n";
+                    print_stats(m_player);
+                }
+                else if (choice == 'e' || choice == 'E') {
+                    m_player->open_inventory();
                 }
                 else if (choice == 'n' || choice == 'N') {
                     cout << "Marching on. Try not to trip.\n";
@@ -61,7 +64,6 @@ void GameManager::run() {
                 else if (choice == 'q' || choice == 'Q') {
                     cout << "I have to ask...\n";
                     while(true) {
-                        
                         string confirmInput = get_string("Are you sure? (y/n)\n> ");
                         char confirm = confirmInput[0]; 
 

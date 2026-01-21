@@ -3,8 +3,8 @@
 
 //#include "GameManager.h"
 #include "Utils.h"
-#include <cstdlib> // עבור srand
-#include <ctime>   // עבור time
+#include <cstdlib>
+#include <ctime> 
 #include <iostream>
 
 using std::cout;

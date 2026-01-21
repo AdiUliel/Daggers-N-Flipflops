@@ -13,10 +13,10 @@ int random_int(int min, int max) {
 }
 
 void print_stats(Character* player) {
-    if (player == nullptr) return; // הגנה מקריסה
+    if (player == nullptr) return;
 
     cout << "\n----------------------------------------\n";
-    cout << "       PLAYER STATS (Mediocre at best)  \n";
+    cout << "    PLAYER STATS (Mediocre at best)  \n";
     cout << "----------------------------------------\n";
     cout << "Name:  " << player->get_name() << "\n";
     cout << "Level: " << player->get_level() << "\n";

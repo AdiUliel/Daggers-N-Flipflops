@@ -23,7 +23,7 @@ public:
         
         int choice = get_int("> ");
 
-        // --- קניית שיקוי ---
+        // Pot Buy
         if (choice == 1) {
             if (player->get_coins() >= 20) {
                 player->new_coins(-20);
@@ -33,27 +33,26 @@ public:
                 cout << "Merchant: 'No gold? Then bleed somewhere else.'\n";
             }
         } 
-        // --- קניית קשת ---
+        // Bow Buy
         else if (choice == 2) {
             if (player->get_coins() >= 150) {
                 player->new_coins(-150);
-                player->equip(new Bow()); // יצירת נשק חדש והרכבה
+                player->equip(new Bow());
                 cout << "Merchant: 'Try not to shoot yourself.'\n";
             } else {
                 cout << "Merchant: 'This isn't a charity. Come back when you're rich.'\n";
             }
         }
-        // --- קניית מטה ---
+        // Staff Buy
         else if (choice == 3) {
             if (player->get_coins() >= 100) {
                 player->new_coins(-100);
-                player->equip(new Staff()); // יצירת נשק חדש והרכבה
+                player->equip(new Staff());
                 cout << "Merchant: 'A stick for a stick figure. Fitting.'\n";
             } else {
                 cout << "Merchant: 'You can't afford magic, kid.'\n";
             }
         }
-        // --- יציאה ---
         else {
             cout << "You leave. The merchant counts his money and ignores you.\n";
         }

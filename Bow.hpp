@@ -1,29 +1,31 @@
-#include "Weapon.hpp"
+#ifndef BOW_HPP
+#define BOW_HPP
+
+#include "Weapon.h"
 #include "Utils.h"
+#include "Character.h"
 
 class Bow : public Weapon {
 public:
-    Bow() : Weapon("Longbow", 150) {}
+    Bow() : Weapon("Longbow", 8, "Common", 150) {}
 
     string get_action_name(Character* user) override {
         if (user->get_class_name() == "Thief") return "Poisoned Shot";
         return "Shoot Arrow";
     }
 
-    void use(Character* user, Character* target) override {
-        // 1. בדיקת תחמושת (נניח הוספנו has_item("Arrow") או משתנה arrows)
-        // לצורך הדוגמה נניח שיש להם חצים תמיד כרגע
-        
-        int dmg = random_int(10, 20) * m_tier;
+    void attack_action(Character* user, Character* target) override {
+        int tierMultiplier = 1;
+        int dmg = (m_damage + random_int(2, 12)) * tierMultiplier;
 
         if (user->get_class_name() == "Thief") {
             cout << "You dip the arrow in toxin before firing... ";
-            dmg += 5 * m_tier; // תוספת נזק מיידית (או DoT בעתיד)
-            // כאן אפשר להוסיף target->apply_status("POISON");
+            dmg += 5 * tierMultiplier; 
         } 
         else if (user->get_class_name() == "Warrior") {
             cout << "You pull the string too hard and fumble, but still hit. ";
-            dmg -= 5; // לוחם גרוע בקשת
+            dmg -= 3; 
+            if (dmg < 1) dmg = 1; 
         }
         else {
             cout << "You fire a precise shot. ";
@@ -33,3 +35,5 @@ public:
         target->damage(dmg);
     }
 };
+
+#endif
