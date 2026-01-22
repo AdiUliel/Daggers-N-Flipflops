@@ -22,6 +22,7 @@ GameManager::~GameManager() {
 }
 
 void GameManager::run() {
+    print_tutorial();
     init_player();
 
     while (m_isGameActive) {
@@ -64,7 +65,7 @@ void GameManager::run() {
                 else if (choice == 'q' || choice == 'Q') {
                     cout << "I have to ask...\n";
                     while(true) {
-                        string confirmInput = get_string("Are you sure? (y/n)\n> ");
+                        string confirmInput = get_string("Are you sure you want to QUIT THIS GAME? (y/n)\n> ");
                         char confirm = confirmInput[0]; 
 
                         if (confirm == 'n' || confirm == 'N') {

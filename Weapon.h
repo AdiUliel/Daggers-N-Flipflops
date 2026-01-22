@@ -18,9 +18,9 @@ public:
 
     virtual int get_damage() const { return m_damage; }
 
-    virtual std::string get_action_name(Character* user) = 0;
+    virtual std::string get_action_name(Character* user) const = 0;
 
-    virtual void attack_action(Character* user, Character* target) = 0;
+    virtual void attack_action(Character* user, Character* target) const = 0;
 
     bool use(Character* owner) override;
 };

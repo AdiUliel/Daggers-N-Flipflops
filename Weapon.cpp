@@ -3,9 +3,8 @@
 #include <iostream>
 
 bool Weapon::use(Character* owner) {
-    std::cout << "You equipped " << m_name << " (Tier: " << m_tier << ")!\n";
-
-    owner->equip(this);
+    (void)owner;
+    std::cout << "You examine the " << m_name << ". Looks sharp.\n";
     
     return false; 
 }

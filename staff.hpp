@@ -9,7 +9,7 @@ class Staff : public Weapon {
 public:
     Staff() : Weapon("Mystic Staff", 5, "Common", 100) {}
 
-    string get_action_name(Character* user) override {
+    string get_action_name(Character* user) const override {
         if (user->get_class_name() == "Mage") {
             return "Arcane Blast (Spell)";
         } else {
@@ -17,7 +17,7 @@ public:
         }
     }
 
-    void attack_action(Character* user, Character* target) override {
+    void attack_action(Character* user, Character* target) const override {
         int dmg = 0;
         int tierMultiplier = 1;
 

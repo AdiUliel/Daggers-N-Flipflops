@@ -12,7 +12,7 @@ int random_int(int min, int max) {
     return rand() % (max - min + 1) + min;
 }
 
-void print_stats(Character* player) {
+void print_stats(const Character* player) {
     if (player == nullptr) return;
 
     cout << "\n----------------------------------------\n";
@@ -26,6 +26,26 @@ void print_stats(Character* player) {
     cout << "Gold:  " << player->get_coins() << "\n";
     cout << "EXP:   " << player->get_exp() << " / " << player->get_exp_to_next_level() << "\n";
     cout << "----------------------------------------\n";
+}
+
+void print_tutorial() {
+    cout << "\n=================================================\n";
+    cout << "           WELCOME TO DAGGERS & FLIPFLOPS        \n";
+    cout << "=================================================\n";
+    cout << "GOAL: Climb as many floors as possible in the Endless Tower.\n";
+    cout << "\nMECHANICS:\n";
+    cout << " * BATTLES:  Turn-based combat. Use your weapon or items.\n";
+    cout << " * SHOP:     Buy potions to survive and better weapons to kill.\n";
+    cout << " * EVENTS:   Random encounters (Wildcards) can bless or curse you.\n";
+    cout << " * DEATH:    Is permanent. Don't die.\n";
+    cout << "\nTIPS:\n";
+    cout << " - Mages need MP. Warriors need HP. Thieves need luck.\n";
+    cout << " - Use potions BEFORE you reach 0 HP.\n";
+    cout << " - Different weapons have special effects for different classes.\n";
+    cout << "=================================================\n\n";
+    
+    cout << "Press ENTER to start your suffering...";
+    cin.get();
 }
 
 string get_string(const string& prompt) {

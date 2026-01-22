@@ -9,12 +9,12 @@ class Bow : public Weapon {
 public:
     Bow() : Weapon("Longbow", 8, "Common", 150) {}
 
-    string get_action_name(Character* user) override {
+    string get_action_name(Character* user) const override {
         if (user->get_class_name() == "Thief") return "Poisoned Shot";
         return "Shoot Arrow";
     }
 
-    void attack_action(Character* user, Character* target) override {
+    void attack_action(Character* user, Character* target) const override {
         int tierMultiplier = 1;
         int dmg = (m_damage + random_int(2, 12)) * tierMultiplier;
 

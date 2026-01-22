@@ -6,19 +6,19 @@ Enemy::Enemy(int floor, MobType type)
 {
     if (m_type == GOBLIN) {
         m_name = "Goblin";
-        m_maxHP = (floor * 8) + 5;
-        m_power = floor * 2;
-        m_xpReward = 10 * floor;
-        m_goldReward = random_int(2, 6) * floor;
+        m_maxHP = (floor * 6) + 10;
+        m_power = (floor * 1.5) + 1;
+        m_xpReward = 15 * floor;
+        m_goldReward = random_int(5, 10) * floor;
     } 
     else if (m_type == BANDIT) {
         m_name = "Bandit";
-        m_maxHP = (floor * 10) + 10;
+        m_maxHP = (floor * 8) + 15;
         m_power = (floor * 2) + 2;
-        m_xpReward = 15 * floor;
-        m_goldReward = random_int(10, 20) * floor;
+        m_xpReward = 20 * floor;
+        m_goldReward = random_int(15, 25) * floor;
     } 
-    else { // GHOST
+    else {
         m_name = "Ghost";
         m_maxHP = (floor * 5) + 20;
         m_power = (floor * 3);
@@ -30,7 +30,6 @@ Enemy::Enemy(int floor, MobType type)
 }
 
 int Enemy::attack() const {
-    // נזק בטווח של הכוח +/- 2
     return random_int(m_power - 2, m_power + 2);
 }
 

@@ -1,18 +1,20 @@
 #include "Character.h"
 #include "Utils.h"
+#include <memory>
 
-void Character::add_item(Item* item) {
-    m_inventory.push_back(item);
+void Character::add_item(unique_ptr<Item> item) {
     cout << "You obtained: " << item->get_name() << "!\n";
+    m_inventory.push_back(std::move(item));
 }
 
-void Character::equip(Weapon* newWeapon) {
+void Character::equip(unique_ptr<Weapon> newWeapon) {
     if (m_weapon != nullptr) {
         cout << "You put " << m_weapon->get_name() << " back in your bag.\n";
-        m_inventory.push_back(m_weapon); 
+        m_inventory.push_back(std::move(m_weapon));
     }
-    
-    m_weapon = newWeapon;
+    m_weapon = std::move(newWeapon);
+    cout << "Equipped " << m_weapon->get_name() << ".\n";
+
 }
 
 void Character::open_inventory() {
@@ -70,17 +72,21 @@ void Character::open_inventory() {
 
         if (itemChoice > 0 && itemChoice <= (int)realIndices.size()) {
             int realIndex = realIndices[itemChoice - 1];
-            Item* itemToUse = m_inventory[realIndex];
+            Item* rawItem = m_inventory[realIndex].get();
+            Weapon* weaponPtr = dynamic_cast<Weapon*>(rawItem);
 
-
-            bool destroy = itemToUse->use(this);
-
-            m_inventory.erase(m_inventory.begin() + realIndex);
-
-            if (destroy) {
-                delete itemToUse; 
+            if (weaponPtr != nullptr) {
+                unique_ptr<Item> itemMoved = std::move(m_inventory[realIndex]);
+                unique_ptr<Weapon> weaponUnique(static_cast<Weapon*>(itemMoved.release()));
+                equip(std::move(weaponUnique));
+                m_inventory.erase(m_inventory.begin() + realIndex);
             }
-            
+            else {
+                bool destroy = rawItem->use(this);
+                if (destroy) {
+                    m_inventory.erase(m_inventory.begin() + realIndex);
+                }
+            }
             cout << "Done.\n";
         } else {
             cout << "Invalid item selection.\n";

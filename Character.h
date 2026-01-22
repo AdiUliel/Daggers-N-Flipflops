@@ -4,12 +4,14 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <memory>
 #include "Item.h"
 #include "Weapon.h" 
 
 using std::string;
 using std::cout;
 using std::vector;
+using std::unique_ptr;
 
 class Character {
 protected:
@@ -25,21 +27,14 @@ protected:
     int m_exp;
     int m_expToNextLevel;
 
-    Weapon* m_weapon;
-    vector<Item*> m_inventory; 
+    std::unique_ptr<Weapon> m_weapon;
+    vector<unique_ptr<Item>> m_inventory; 
 
 public:
-    Character(string name, int hp, int power, int mp = 0) 
-        : m_name(name), m_maxHP(hp), m_currentHP(hp), m_power(power), 
-          m_maxMP(mp), m_currentMP(mp), m_coins(0), 
-          m_level(1), m_exp(0), m_expToNextLevel(100),
-          m_weapon(nullptr) {}
+    Character(string name, int hp, int power, int mp = 0) : 
+    m_name(name), m_maxHP(hp), m_currentHP(hp), m_power(power), m_maxMP(mp), m_currentMP(mp), m_coins(0), m_level(1), m_exp(0), m_expToNextLevel(50), m_weapon(nullptr) {}
 
-    virtual ~Character() {
-        if (m_weapon != nullptr) delete m_weapon;
-        for (Item* item : m_inventory) delete item;
-        m_inventory.clear();
-    }
+    virtual ~Character() {}
 
     int get_level() const { return m_level; }
     int get_exp() const { return m_exp; }
@@ -56,9 +51,9 @@ public:
     void level_up() {
         m_exp -= m_expToNextLevel;
         m_level++;
-        m_expToNextLevel = (int)(m_expToNextLevel * 1.5);
+        m_expToNextLevel = (int)(m_expToNextLevel * 1.3);
         
-        m_maxHP += 20;
+        m_maxHP += 30;
         m_currentHP = m_maxHP;
         m_power += 5;
         
@@ -66,16 +61,16 @@ public:
         cout << "Max HP increased to " << m_maxHP << ", Power increased to " << m_power << ".\n";
     }
 
-    void add_item(Item* item);       
+    void add_item(unique_ptr<Item> item);       
     void open_inventory();           
-    void equip(Weapon* newWeapon);   
+    void equip(unique_ptr<Weapon> newWeapon);   
 
     string get_name() const { return m_name; }
     int get_HP() const { return m_currentHP; }
     int get_power() const { return m_power; }
     int get_coins() const { return m_coins; }
     int get_MP() const { return m_currentMP; }
-    Weapon* get_weapon() const { return m_weapon; }
+    Weapon* get_weapon() const { return m_weapon.get(); }
 
     void heal(int amount) {
         m_currentHP += amount;
