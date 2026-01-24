@@ -3,14 +3,25 @@
 
 #include <string>
 #include <iostream>
+#include <memory>
+#include <vector>
+#include <cctype>
 #include "Character.h"
+
+using std::string;
+using std::unique_ptr;
+using std::vector;
 
 int random_int(int min, int max);
 
 void print_stats(const Character* player);
 void print_tutorial();
+void change_player_class(unique_ptr<Character>& player);
+string lowerecase(string& str);
+
 
 // THE INPUT PROTECTORS: //
 string get_string(const string& prompt);
 int get_int(const string& prompt);
+
 #endif

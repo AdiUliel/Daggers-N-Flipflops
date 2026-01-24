@@ -8,6 +8,7 @@
 
 using std::cout;
 using std::string;
+using std::unique_ptr;
 
 class Battle : public Encounter {
 private:
@@ -16,7 +17,7 @@ private:
 public:
     Battle(int floor) : m_floor(floor) {}
 
-    void run(Character* player) override {
+    void run(unique_ptr<Character>& player) override {
         Enemy::MobType type = static_cast<Enemy::MobType>(random_int(0, 2));
         Enemy* enemy = new Enemy(m_floor, type);
         
@@ -28,7 +29,7 @@ public:
             
             string attackName = "Flail wildly (Attack)";
             if (player->get_weapon() != nullptr) {
-                attackName = player->get_weapon()->get_action_name(player);
+                attackName = player->get_weapon()->get_action_name(player.get());
             }
 
             cout << "1. " << attackName << "  2. Cry for help (Heal 20 MP)\n";
@@ -38,7 +39,7 @@ public:
 
             if (choice == 1) {
                 if (player->get_weapon() != nullptr) {
-                    player->get_weapon()->attack_action(player, enemy);
+                    player->get_weapon()->attack_action(player.get(), enemy);
                 } 
                 else {
                     int dmg = random_int(player->get_power(), player->get_power() + 5);

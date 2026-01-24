@@ -2,6 +2,11 @@
 #define CLASSES_H
 
 #include "Character.h"
+#include <string>
+#include <vector>
+using std::string;
+
+extern vector<string> all_classes;
 
 class Warrior : public Character {
 public:

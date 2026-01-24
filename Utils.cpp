@@ -1,12 +1,18 @@
 #include "Utils.h"
+#include "Classes.h"
 #include <random>
 #include <iostream>
 #include <limits>
+#include <vector>
+#include <cctype>
 using std::cin;
 using std::cout;
 using std::endl;
 using std::string;
 using std::getline;
+using std::unique_ptr;
+using std::make_unique;
+using std::vector;
 
 int random_int(int min, int max) {
     return rand() % (max - min + 1) + min;
@@ -48,6 +54,45 @@ void print_tutorial() {
     cin.get();
 }
 
+void change_player_class(unique_ptr<Character>& player) {
+    
+    string currentClass = player->get_class_name();
+    
+    vector<string> candidates;
+    for (const string& className : all_classes) {
+        if (className != currentClass) {
+            candidates.push_back(className);
+        }
+    }
+
+    if (candidates.empty()) {
+        cout << "Error: No other classes available to switch to.\n";
+        return;
+    }
+    
+    int randomIndex = random_int(0, candidates.size() - 1);
+    string newClassName = candidates[randomIndex];
+
+    unique_ptr<Character> newPlayer;
+
+    if (newClassName == "Warrior") newPlayer = make_unique<Warrior>(player->get_name());
+    else if (newClassName == "Mage") newPlayer = make_unique<Mage>(player->get_name());
+    else if (newClassName == "Thief") newPlayer = make_unique<Thief>(player->get_name());
+    else if (newClassName == "Archer") newPlayer = make_unique<Archer>(player->get_name());
+    else if (newClassName == "Normie") newPlayer = make_unique<Normie>(player->get_name());
+    else {
+        cout << "Error: Unknown class generated: " << newClassName << ".\n";
+        return;
+    }
+
+    cout << "\n*** TRANSFORMING INTO " << newClassName << " ***\n";
+    newPlayer->transfer_player(*player); 
+    player = move(newPlayer);
+    
+    cout << "Transformation complete! Check your new stats.\n";
+}
+
+
 string get_string(const string& prompt) {
     string line;
     while (true) {
@@ -68,7 +113,7 @@ int get_int(const string& prompt) {
         string input = get_string(prompt);
 
         try {
-            int result = std::stoi(input);
+            int result = stoi(input);
             return result;
         } 
         catch (const std::invalid_argument&) {
@@ -78,4 +123,11 @@ int get_int(const string& prompt) {
             cout << "Error: Number too large (or small). Be reasonable.\n";
         }
     }
+}
+
+string lowerecase(string& str){
+    for (auto& x : str) {
+        x = tolower(x);
+    }
+    return str;
 }

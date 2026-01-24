@@ -10,6 +10,7 @@
 #include <iostream>
 #include <limits>
 #include <string>
+#include <memory>
 
 
 using std::cout;
@@ -19,7 +20,7 @@ using std::endl;
 
 class GameManager {
 private:
-    Character* m_player;
+    unique_ptr<Character> m_player;
     int m_currentFloor;
     bool m_isGameActive;
 

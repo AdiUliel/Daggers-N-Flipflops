@@ -47,7 +47,7 @@ private:
     }
 
 public:
-    void run(Character* player) override {
+    void run(unique_ptr<Character>& player) override {
         cout << "\n--- WANDERING MERCHANT ---\n";
         cout << "Merchant: 'Oh, look who survived.' (Coins: " << player->get_coins() << ")\n";
 

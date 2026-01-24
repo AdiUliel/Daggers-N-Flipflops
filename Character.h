@@ -96,6 +96,23 @@ public:
     }
     
     virtual string get_class_name() const = 0; 
+
+    void transfer_player(Character& oldPlayer) {
+        m_currentHP = oldPlayer.get_HP();
+        m_maxHP = oldPlayer.m_maxHP;
+        m_power = oldPlayer.m_power;
+        m_maxMP = oldPlayer.m_maxMP;
+        m_currentMP = oldPlayer.m_currentMP;
+        m_coins = oldPlayer.m_coins;
+        m_level = oldPlayer.m_level;
+        m_exp = oldPlayer.m_exp;
+        m_expToNextLevel = oldPlayer.m_expToNextLevel;
+        
+        if (oldPlayer.m_weapon) {
+            m_weapon = std::move(oldPlayer.m_weapon);
+        }
+        m_inventory = std::move(oldPlayer.m_inventory);
+    }
 };
 
 #endif

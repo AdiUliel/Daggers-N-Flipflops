@@ -4,6 +4,8 @@
 using std::cout;
 using std::string;
 
+vector<string> all_classes = { "Warrior", "Mage", "Archer", "Thief", "Normie" };
+
 // Warrior: HP=180, Power=11, MP=0
 Warrior::Warrior(const string& name) : Character(name, 180, 11, 0) {}
 string Warrior::get_class_name() const { return "Warrior"; }
