@@ -43,7 +43,7 @@ void GameManager::run() {
         else {
             bool movingOn = false;
             
-            cout << "\nFloor cleared. Take a breath, you look terrible.\n";
+            cout << "\nFloor cleared.\n";
 
             while (!movingOn) {
                 cout << "\n--- PAUSE MENU ---\n";
@@ -91,6 +91,12 @@ void GameManager::run() {
     }
 }
 
+/**
+ * @brief Initializes the player character.
+ * * Uses the Factory pattern to create a specific child class of Character
+ * based on user string input (Warrior, Mage, etc).
+ * Stores the result in m_player (unique_ptr).
+ */
 void GameManager::init_player() {
     int count = Game::getInstance().getRunCount();
     if (count == 1) {
@@ -102,11 +108,11 @@ void GameManager::init_player() {
     string name = get_string("Let's get this over with. What do you call yourself, mortal? ");
     
     string pick;
-    cout << "Choose a class (Warrior / Mage / Archer / Thief / Normie). Try to pick something useful.\n";
+    cout << "Choose a class (Warrior / Mage / Archer / Thief / Normie). No " << name <<", Mayonaise is not class.\n";
     
     while (true) {
         pick = get_string("> "); 
-        pick = lowerecase(pick);
+        pick = lowercase(pick);
 
         if (pick == "warrior") { m_player = make_unique<Warrior>(name); break; }
         if (pick == "mage") { m_player = make_unique<Mage>(name); break; }
@@ -121,6 +127,16 @@ void GameManager::init_player() {
     print_class_details(m_player->get_class_name());
 }
 
+/**
+ * @brief Generates a random encounter for the current floor.
+ * * Logic:
+ * - Every 15th floor: BOSS BATTLE (Level + 5).
+ * - Otherwise:
+ * - 50% Battle
+ * - 30% WildCard Event
+ * - 20% Shop
+ * * Uses Polymorphism to run the encounter via the base Encounter class.
+ */
 void GameManager::play_turn() {
     unique_ptr<Encounter> currentEncounter = nullptr;
 

@@ -10,6 +10,14 @@ using std::cout;
 using std::string;
 using std::unique_ptr;
 
+/**
+ * @class Battle
+ * @brief Handles turn-based combat logic.
+ * * Creates a random enemy based on the current floor.
+ * * Manages the initiative (who attacks first).
+ * * Runs the loop: Player Action -> Enemy Action -> Repeat until death or flee.
+ * * Handles special class interactions (Archer's speed, Normie's backup).
+ */
 class Battle : public Encounter {
 private:
     int m_floor;
@@ -18,7 +26,7 @@ public:
     Battle(int floor) : m_floor(floor) {}
 
     void run(unique_ptr<Character>& player) override {
-        // 1. Initialize Enemy
+        // Initialize Enemy
         Enemy::MobType type = static_cast<Enemy::MobType>(random_int(0, 2));
         Enemy* enemy = new Enemy(m_floor, type);
         
@@ -26,7 +34,7 @@ public:
 
         bool battleOver = false;
         
-        // 2. Determine Initiative
+        // Determine Initiative
         bool playerTurn = true;
         
         cout << "\n--- BATTLE START ---\n";
@@ -42,14 +50,13 @@ public:
         
         wait_for_enter(); 
 
-        // 3. Main Battle Loop
+        // Main Battle Loop
         while (!battleOver) {
             
             if (playerTurn) {
-                // --- PLAYER TURN ---
                 player->tick_turn(); 
 
-                // --- Normie Logic ---
+                // Normie Logic
                 if (player->get_backup_timer() > 0) {
                     player->decrease_backup_timer();
                     
@@ -72,7 +79,7 @@ public:
                     }
                 }
 
-                // --- שינוי כאן: הוספת MP גם לאויב ---
+                // not yet needed - MP changes for enemy
                 cout << "\n[ " << player->get_name() << " | HP: " << player->get_HP() << " MP: " << player->get_MP() << " ]"
                      << " VS "
                      << "[ " << enemy->get_type_name() << " | HP: " << enemy->get_HP() << " MP: " << enemy->get_MP() << " ]\n";
@@ -130,7 +137,7 @@ public:
                 if (!battleOver) wait_for_enter();
 
             } else {
-                // --- ENEMY TURN ---
+                // Enemy's turn
                 if (enemy->is_stunned()) {
                     cout << "Enemy is STUNNED and cannot move this turn!\n";
                     enemy->apply_stun(0); 

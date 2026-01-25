@@ -17,7 +17,7 @@ int random_int(int min, int max);
 void print_stats(const Character* player);
 void print_tutorial();
 void change_player_class(unique_ptr<Character>& player);
-string lowerecase(string& str);
+string lowercase(string& str);
 void print_class_details(const string& className);
 void wait_for_enter();
 

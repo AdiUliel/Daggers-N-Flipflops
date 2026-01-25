@@ -28,6 +28,13 @@ using std::cout;
 using std::unique_ptr;
 using std::vector;
 
+/**
+ * @class Shop
+ * @brief Represents a merchant encounter.
+ * * Generates 3 random weapons and offers standard potions.
+ * * Handles the economy (checking gold balance).
+ * * Uses Inventory Management: Checks if player has weight capacity before deducting gold.
+ */
 class Shop : public Encounter {
 private:
     unique_ptr<Item> create_weapon_by_id(int id) {
