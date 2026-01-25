@@ -50,3 +50,9 @@ string Enemy::get_type_name() const {
 string Enemy::get_class_name() const {
     return "Enemy";
 }
+
+void Enemy::use_special_ability(Character* target) {
+// not using it, but is here because we have this method as pure virtual in Character class
+    (void)target;
+    std::cout << m_name << " is gathering dark energy! (But nothing happens yet)\n";
+}

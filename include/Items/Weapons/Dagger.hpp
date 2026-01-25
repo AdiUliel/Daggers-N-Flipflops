@@ -7,7 +7,7 @@
 
 class Dagger : public Weapon {
 public:
-    Dagger() : Weapon("Rusty Dagger", 6, "Common", 80) {}
+    Dagger() : Weapon("Rusty Dagger", 1, 5, 5, 1) {}
 
     std::string get_action_name(Character* user) const override {
         if (user->get_class_name() == "Thief") return "Backstab";

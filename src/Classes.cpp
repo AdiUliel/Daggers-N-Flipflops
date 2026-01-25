@@ -23,5 +23,5 @@ Thief::Thief(const string& name) : Character(name, 90, 8, 0) {}
 string Thief::get_class_name() const { return "Thief"; }
 
 // Normie: HP=80, Power=5, MP=0
-Normie::Normie(const string& name) : Character(name, 80, 5, 0) {}
+Normie::Normie(const string& name) : Character(name, 80, 5, 0, 30) {}
 string Normie::get_class_name() const { return "Normie"; }

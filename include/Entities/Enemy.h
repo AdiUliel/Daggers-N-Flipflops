@@ -28,6 +28,8 @@ public:
     string get_type_name() const;
     
     string get_class_name() const override; 
+
+    void use_special_ability(Character* target) override;
 };
 
 #endif

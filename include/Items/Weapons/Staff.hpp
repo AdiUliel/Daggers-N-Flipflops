@@ -7,7 +7,7 @@
 
 class Staff : public Weapon {
 public:
-    Staff() : Weapon("Mystic Staff", 5, "Common", 100) {}
+    Staff() : Weapon("Wooden Staff", 1, 10, 8, 4) {}
 
     string get_action_name(Character* user) const override {
         if (user->get_class_name() == "Mage") {

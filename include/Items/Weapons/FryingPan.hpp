@@ -7,7 +7,7 @@
 
 class FryingPan : public Weapon {
 public:
-    FryingPan() : Weapon("Cast Iron Pan", 8, "Common", 50) {}
+    FryingPan() : Weapon("Iron Pan", 1, 20, 12, 10) {}
 
     std::string get_action_name(Character* user) const override {
         if (user->get_class_name() == "Normie") return "Gordon Ramsay Style";

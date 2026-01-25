@@ -7,7 +7,7 @@
 
 class Sword : public Weapon {
 public:
-    Sword() : Weapon("Iron Sword", 10, "Common", 120) {}
+    Sword() : Weapon("Sword", 1, 10, 10, 5) {}
 
     std::string get_action_name(Character* user) const override {
         if (user->get_class_name() == "Warrior") return "Heroic Slash";

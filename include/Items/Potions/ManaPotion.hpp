@@ -1,5 +1,5 @@
-#ifndef MANA_POTION_H
-#define MANA_POTION_H
+#ifndef MANA_POTION_HPP
+#define MANA_POTION_HPP
 
 #include "Item.h"
 #include "Character.h"
@@ -10,7 +10,7 @@ class ManaPotion : public Item {
 
 public:
     ManaPotion(int amount) 
-        : Item("Mana Potion", "Common", 30, "Usable"), m_restoreAmount(amount) {}
+        : Item("Mana Potion", "Common", 1 ,1, 10), m_restoreAmount(amount) {}
 
     bool use(Character* owner) override {
         std::cout << "You drink the glowing blue liquid. It tingles.\n";
@@ -19,6 +19,7 @@ public:
         owner->set_MP(currentMP + m_restoreAmount);
         
         std::cout << "Restored " << m_restoreAmount << " MP.\n";
+        std::cout << "current MP: " << owner->get_MP() << "\n";
         return true;
     }
 };

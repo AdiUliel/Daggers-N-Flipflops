@@ -7,7 +7,7 @@
 
 class Crossbow : public Weapon {
 public:
-    Crossbow() : Weapon("Light Crossbow", 12, "Common", 140) {}
+    Crossbow() : Weapon("Heavy Crossbow", 2, 40, 25, 8) {}
 
     std::string get_action_name(Character* user) const override {
         if (user->get_class_name() == "Archer") return "Piercing Shot";

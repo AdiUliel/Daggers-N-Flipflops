@@ -18,9 +18,7 @@ using std::make_unique;
 
 GameManager::GameManager() : m_player(nullptr), m_currentFloor(1), m_isGameActive(true) {}
 
-GameManager::~GameManager() {
-    
-}
+GameManager::~GameManager() {}
 
 void GameManager::run() {
     print_tutorial();
@@ -120,6 +118,7 @@ void GameManager::init_player() {
     }
     
     cout << "Ugh, a " << pick << ". How original. \nStats: HP: " << m_player->get_HP() << " | Power: " << m_player->get_power() << ". Try not to die in five minutes.\n";
+    print_class_details(m_player->get_class_name());
 }
 
 void GameManager::play_turn() {

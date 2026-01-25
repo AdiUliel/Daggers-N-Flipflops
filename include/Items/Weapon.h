@@ -11,8 +11,8 @@ protected:
     int m_damage;
 
 public:
-    Weapon(std::string name, int damage, std::string tier, int price)
-        : Item(name, tier, price, "Wearable"), m_damage(damage) {}
+   Weapon(std::string name, int tier, int price, int damage, int weight = 5)
+        : Item(name, "Wearable", tier, weight, price), m_damage(damage) {}
 
     virtual ~Weapon() {}
 
@@ -22,7 +22,10 @@ public:
 
     virtual void attack_action(Character* user, Character* target) const = 0;
 
-    bool use(Character* owner) override;
+    bool use(Character* target) override { 
+        (void)target;
+        return false; 
+    }
 };
 
 #endif

@@ -7,8 +7,7 @@
 
 class Hammer : public Weapon {
 public:
-    // נזק בסיסי גבוה (15), מחיר: 150
-    Hammer() : Weapon("War Hammer", 15, "Common", 150) {}
+    Hammer() : Weapon("War Hammer", 2, 30, 20, 15) {}
 
     std::string get_action_name(Character* user) const override {
         if (user->get_class_name() == "Warrior") return "Skull Crusher";

@@ -7,7 +7,7 @@
 
 class ThrowingStars : public Weapon {
 public:
-    ThrowingStars() : Weapon("Shuriken", 8, "Common", 100) {}
+    ThrowingStars() : Weapon("Shurikens", 1, 15, 9, 2) {}
 
     std::string get_action_name(Character* user) const override {
         if (user->get_class_name() == "Thief") return "Shadow Volley";

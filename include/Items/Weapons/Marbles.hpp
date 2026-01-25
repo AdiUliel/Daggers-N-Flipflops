@@ -7,7 +7,7 @@
 
 class Marbles : public Weapon {
 public:
-    Marbles() : Weapon("Bag of Marbles", 5, "Common", 30) {}
+    Marbles() : Weapon("Bag of Marbles", 0, 1, 1, 1) {}
 
     std::string get_action_name(Character* user) const override {
         if (user->get_class_name() == "Normie") return "Home Alone Trap";

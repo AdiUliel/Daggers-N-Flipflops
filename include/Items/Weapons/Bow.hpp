@@ -7,7 +7,7 @@
 
 class Bow : public Weapon {
 public:
-    Bow() : Weapon("Longbow", 8, "Common", 150) {}
+    Bow() : Weapon("Long Bow", 1, 15, 12, 3) {}
 
     string get_action_name(Character* user) const override {
         if (user->get_class_name() == "Thief") return "Poisoned Shot";

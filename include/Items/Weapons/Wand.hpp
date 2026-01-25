@@ -7,7 +7,7 @@
 
 class Wand : public Weapon {
 public:
-    Wand() : Weapon("Apprentice Wand", 4, "Common", 90) {}
+    Wand() : Weapon("Magic Wand", 2, 50, 15, 1) {}
 
     std::string get_action_name(Character* user) const override {
         if (user->get_class_name() == "Mage") return "Magic Missile";

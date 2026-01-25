@@ -90,8 +90,50 @@ void change_player_class(unique_ptr<Character>& player) {
     player = move(newPlayer);
     
     cout << "Transformation complete! Check your new stats.\n";
+    print_class_details(player->get_class_name());
 }
 
+void wait_for_enter() {
+    cout << "\n[Press ENTER to continue...]";
+    cin.get(); 
+}
+
+void print_class_details(const string& className) {
+    cout << "\n--------------------------------------------------\n";
+    if (className == "Warrior") {
+        cout << "CLASS: WARRIOR (The Tank)\n";
+        cout << "Stats:   High HP (180), Low MP.\n";
+        cout << "Active:  BATTLE ROAR (Cost: 10 MP) - Deals damage and STUNS the enemy.\n";
+        cout << "Passive: IRON SKIN - Takes reduced physical damage.\n";
+    }
+    else if (className == "Mage") {
+        cout << "CLASS: MAGE (The Glass Cannon)\n";
+        cout << "Stats:   Low HP (90), High MP (100), High Damage.\n";
+        cout << "Active:  HEAL (Cost: 20 MP) - Restores HP during battle.\n";
+        cout << "Passive: MANA REGEN - Fully restores MP after every battle.\n";
+    }
+    else if (className == "Archer") {
+        cout << "CLASS: ARCHER (The Sniper)\n";
+        cout << "Stats:   Balanced HP (120).\n";
+        cout << "Active:  HEADSHOT (Cost: 15 MP) - Deals massive Critical Damage.\n";
+        cout << "Passive: QUICK DRAW - Always attacks first in battle.\n";
+    }
+    else if (className == "Thief") {
+        cout << "CLASS: THIEF (The Gambler)\n";
+        cout << "Stats:   Medium HP (110).\n";
+        cout << "Active:  SHADOWFIGHT (Cost: 15 MP) - Gain 50% Dodge chance for 2 turns.\n";
+        cout << "Passive: ESCAPE ARTIST - 100% chance to run away from battles.\n";
+    }
+    else if (className == "Normie") {
+        cout << "CLASS: NORMIE (Just a Guy)\n";
+        cout << "Stats:   Weak stats. Why would you pick this?\n";
+        cout << "Active:  CALL THE BOYS - Calls for backup. Takes 3 turns to arrive, then insta-kills.\n";
+        cout << "Passive: BIG POCKETS - Inventory size increases with Level.\n";
+    }
+    cout << "--------------------------------------------------\n";
+}
+
+/// the input protectors:
 
 string get_string(const string& prompt) {
     string line;
