@@ -1,5 +1,5 @@
-#ifndef SHOP_H
-#define SHOP_H
+#ifndef SHOP_HPP
+#define SHOP_HPP
 
 #include "Encounter.h"
 #include "Utils.h"
@@ -7,6 +7,7 @@
 #include "HealthPotion.hpp"
 #include "ManaPotion.hpp"
 #include <memory>
+#include <vector>
 
 // Weapons Includes
 #include "Sword.hpp"
@@ -21,20 +22,10 @@
 #include "Marbles.hpp"
 #include "Flipflops.hpp"
 
-#include <iostream>
-#include <vector>
-
 using std::cout;
 using std::unique_ptr;
 using std::vector;
 
-/**
- * @class Shop
- * @brief Represents a merchant encounter.
- * * Generates 3 random weapons and offers standard potions.
- * * Handles the economy (checking gold balance).
- * * Uses Inventory Management: Checks if player has weight capacity before deducting gold.
- */
 class Shop : public Encounter {
 private:
     unique_ptr<Item> create_weapon_by_id(int id) {
@@ -57,7 +48,7 @@ private:
 public:
     void run(unique_ptr<Character>& player) override {
         cout << "\n--- WANDERING MERCHANT ---\n";
-        cout << "Merchant: 'Oh, look who survived.' (Coins: " << player->get_coins() << ")\n";
+        cout << "Merchant: 'Oh, look who survived.'\n";
 
         vector<int> weaponIds;
         while (weaponIds.size() < 3) {
@@ -67,78 +58,89 @@ public:
             if (!exists) weaponIds.push_back(r);
         }
 
-        vector<unique_ptr<Item>> shopItems;
-        for (int id : weaponIds) {
-            shopItems.push_back(create_weapon_by_id(id));
-        }
+        bool isShopping = true;
+        while (isShopping) {
+            cout << "\n----------------------------------\n";
+            cout << "YOUR GOLD: " << player->get_coins() << "\n";
+            cout << "----------------------------------\n";
 
-        cout << "1. Health Potion (Heal 50) - 20 Coins\n";
-        cout << "2. Mana Potion (Restore 40) - 30 Coins\n";
-        
-        for (size_t i = 0; i < shopItems.size(); i++) {
-            cout << (i + 3) << ". " << shopItems[i]->get_name() 
-                 << " (" << shopItems[i]->get_tier() << ") - " 
-                 << shopItems[i]->get_price() << " Coins [Weight: " << shopItems[i]->get_weight() << "]\n";
-        }
-        
-        cout << "6. Leave\n";
+            vector<unique_ptr<Item>> displayWeapons;
+            for (int id : weaponIds) {
+                displayWeapons.push_back(create_weapon_by_id(id));
+            }
 
-        int choice = get_int("> ");
+            cout << "1. Health Potion (Heal 50) - 20 Coins\n";
+            cout << "2. Mana Potion (Restore 40) - 30 Coins\n";
+            
+            for (size_t i = 0; i < displayWeapons.size(); i++) {
+                cout << (i + 3) << ". " << displayWeapons[i]->get_name() 
+                     << " (" << displayWeapons[i]->get_tier() << ") - " 
+                     << displayWeapons[i]->get_price() << " Coins [Weight: " << displayWeapons[i]->get_weight() << "]\n";
+            }
+            
+            cout << "6. Leave\n";
 
-        if (choice == 1) { 
-            int cost = 20;
-            if (player->get_coins() >= cost) {
-                unique_ptr<Item> potion = std::make_unique<HealthPotion>(50);
-                
-                if (player->pick_up_item(std::move(potion))) {
-                    player->new_coins(-cost);
-                    cout << "Merchant: 'Try not to choke on it.'\n";
+            int choice = get_int("> ");
+
+            if (choice == 1) { 
+                int cost = 20;
+                if (player->get_coins() >= cost) {
+                    unique_ptr<Item> potion = std::make_unique<HealthPotion>(50);
+                    if (player->pick_up_item(std::move(potion))) {
+                        player->new_coins(-cost);
+                        cout << "Merchant: 'Good. Anything else?'\n";
+                    } else {
+                        cout << "Merchant: 'Your bag is full.'\n";
+                    }
                 } else {
-                    cout << "Merchant: 'Your bag is full.'\n";
+                    cout << "Merchant: 'No gold? Then bleed somewhere else.'\n";
                 }
-            } else {
-                cout << "Merchant: 'No gold? Then bleed somewhere else.'\n";
+            }
+            else if (choice == 2) { 
+                int cost = 30;
+                if (player->get_coins() >= cost) {
+                    unique_ptr<Item> potion = std::make_unique<ManaPotion>(40);
+                    if (player->pick_up_item(std::move(potion))) {
+                        player->new_coins(-cost);
+                        cout << "Merchant: 'Another one? Sure.'\n";
+                    } else {
+                        cout << "Merchant: 'Make space first.'\n";
+                    }
+                } else {
+                    cout << "Merchant: 'Mana isn't free.'\n";
+                }
+            }
+            else if (choice >= 3 && choice <= 5) { 
+                int index = choice - 3;
+                int cost = displayWeapons[index]->get_price();
+
+                if (player->get_coins() >= cost) {
+                    unique_ptr<Item> newWeapon = create_weapon_by_id(weaponIds[index]);
+
+                    if (player->pick_up_item(std::move(newWeapon))) {
+                        player->new_coins(-cost);
+                        cout << "Merchant: 'Solid choice. Want to buy another?'\n";
+                    } else {
+                        cout << "Merchant: 'You can't carry that.'\n";
+                    }
+                } else {
+                    cout << "Merchant: 'Come back when you're rich.'\n";
+                }
+            }
+            else if (choice == 6) {
+                cout << "You leave the shop.\n";
+                isShopping = false;
+            }
+            else {
+                cout << "Merchant: 'Stop wasting my time.'\n";
+            }
+
+            if (isShopping) {
+                wait_for_enter();
             }
         }
-        else if (choice == 2) { 
-            int cost = 30;
-            if (player->get_coins() >= cost) {
-                unique_ptr<Item> potion = std::make_unique<ManaPotion>(40);
-                
-                if (player->pick_up_item(std::move(potion))) {
-                    player->new_coins(-cost);
-                    cout << "Merchant: 'Magic in a bottle.'\n";
-                } else {
-                    cout << "Merchant: 'Make space first.'\n";
-                }
-            } else {
-                cout << "Merchant: 'Mana isn't free.'\n";
-            }
-        }
-        else if (choice >= 3 && choice <= 5) { 
-            int index = choice - 3;
-            int cost = shopItems[index]->get_price();
 
-            if (player->get_coins() >= cost) {
-                int originalId = weaponIds[index];
-                unique_ptr<Item> newWeapon = create_weapon_by_id(originalId);
-
-                if (player->pick_up_item(std::move(newWeapon))) {
-                    player->new_coins(-cost);
-                    cout << "Merchant: 'Good choice.'\n";
-                } else {
-                    cout << "Merchant: 'You can't carry that.'\n";
-                }
-            } else {
-                cout << "Merchant: 'Come back when you're rich.'\n";
-            }
-        }
-        else if (choice == 6) {
-            cout << "You leave.\n";
-        }
-        else {
-            cout << "Merchant: 'Stop wasting my time.'\n";
-        }
+        cout << "\n--- Encounter finished ---\n";
     }
 };
 

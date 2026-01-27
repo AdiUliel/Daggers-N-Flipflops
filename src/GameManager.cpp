@@ -4,6 +4,7 @@
 #include "Battle.hpp"   
 #include "Shop.hpp"     
 #include "WildCard.hpp" 
+#include "Blacksmith.hpp"
 
 #include <cstdlib> 
 #include <ctime>   
@@ -125,6 +126,7 @@ void GameManager::init_player() {
     
     cout << "Ugh, a " << pick << ". How original. \nStats: HP: " << m_player->get_HP() << " | Power: " << m_player->get_power() << ". Try not to die in five minutes.\n";
     print_class_details(m_player->get_class_name());
+    wait_for_enter();
 }
 
 /**
@@ -147,14 +149,17 @@ void GameManager::play_turn() {
     else {
         int roll = random_int(1, 100);
 
-        if (roll <= 50) {
+        if (roll <= 45) {
             currentEncounter = make_unique<Battle>(m_currentFloor);
         } 
-        else if (roll <= 80) {
-            currentEncounter = make_unique<WildCard>();
-        } 
-        else {
+        else if (roll <= 65) {
             currentEncounter = make_unique<Shop>();
+        } 
+        else if (roll <= 80) {
+            currentEncounter = make_unique<Blacksmith>();
+        }
+        else {
+            currentEncounter = make_unique<WildCard>();
         }
     }
 

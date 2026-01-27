@@ -7,7 +7,7 @@
 
 class Crossbow : public Weapon {
 public:
-    Crossbow() : Weapon("Heavy Crossbow", 2, 40, 25, 8) {}
+    Crossbow() : Weapon("Heavy Crossbow", 1, 40, 25, 8) {}
 
     std::string get_action_name(Character* user) const override {
         if (user->get_class_name() == "Archer") return "Piercing Shot";
@@ -19,7 +19,6 @@ public:
 
         if (user->get_class_name() == "Archer") {
             std::cout << "You aim for the weak spot... ";
-            // לקשת יש סיכוי למכה קריטית כפולה
             if (random_int(1, 10) > 7) {
                 dmg *= 2;
                 std::cout << "HEADSHOT! ";

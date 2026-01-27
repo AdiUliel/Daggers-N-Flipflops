@@ -10,7 +10,7 @@ class ManaPotion : public Item {
 
 public:
     ManaPotion(int amount) 
-        : Item("Mana Potion", "Common", 1 ,1, 10), m_restoreAmount(amount) {}
+        : Item("Mana Potion", "Consumable", 1 ,1, 30), m_restoreAmount(amount) {}
 
     bool use(Character* owner) override {
         std::cout << "You drink the glowing blue liquid. It tingles.\n";

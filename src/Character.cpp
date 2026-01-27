@@ -67,7 +67,29 @@ void Character::equip(unique_ptr<Weapon> newWeapon) {
     }
     m_weapon = std::move(newWeapon);
     cout << "Equipped " << m_weapon->get_name() << ".\n";
+}
 
+void Character::unequip() {
+    if (m_weapon == nullptr) {
+        cout << "You are already using your Bare Hands.\n";
+        return;
+    }
+
+    int weaponWeight = m_weapon->get_weight();
+    int currentLoad = get_current_load();
+    int freeSpace = m_bagCapacity - currentLoad;
+
+    if (weaponWeight > freeSpace) {
+        cout << "You try to put away " << m_weapon->get_name() << "...\n";
+        cout << "But your bag is too full! (Needs " << weaponWeight << "kg, Free: " << freeSpace << "kg)\n";
+        return;
+    }
+
+    cout << "You strapped " << m_weapon->get_name() << " to your back.\n";
+    m_inventory.push_back(std::move(m_weapon));
+    
+    m_weapon = nullptr; 
+    cout << "You are now fighting with Bare Hands.\n";
 }
 
 void Character::take_damage(int amount) {
@@ -99,21 +121,29 @@ void Character::open_inventory() {
 
     bool browsing = true;
     while (browsing) {
-        cout << "\n--- INVENTORY ---\n";
+        if (m_weapon != nullptr) {
+            cout << "[Equipped: " << m_weapon->get_name() << "]\n";
+        } else {
+            cout << "[Equipped: Bare Hands]\n";
+        }
         cout << "1. Wearables (Weapons)\n";
         cout << "2. Usables (Potions)\n";
-        cout << "3. Close Bag\n";
-        
+        cout << "3. Unequip Weapon (Switch to Bare Hands)\n";
+        cout << "4. Close Bag\n";
         int choice = get_int("> ");
 
-        if (choice == 3) {
+        if (choice == 4) {
             browsing = false;
             break;
+        }
+        else if (choice == 3) {
+            unequip();
+            continue;
         }
         
         string filterType = "";
         if (choice == 1) filterType = "Wearable";
-        else if (choice == 2) filterType = "Usable";
+        else if (choice == 2) filterType = "Consumable";
         else {
             cout << "Invalid choice.\n";
             continue;

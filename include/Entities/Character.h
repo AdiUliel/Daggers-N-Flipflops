@@ -49,6 +49,9 @@ public:
     int get_level() const { return m_level; }
     int get_exp() const { return m_exp; }
     int get_exp_to_next_level() const { return m_expToNextLevel; }
+    int get_maxHP() const { return m_maxHP; }
+    int get_inventory_size() const { return m_inventory.size(); }
+
 
     void gain_exp(int amount) {
         m_exp += amount;
@@ -56,6 +59,27 @@ public:
         if (m_exp >= m_expToNextLevel) {
             level_up();
         }
+    }
+
+    Item* get_item_at(int index) {
+        if (index >= 0 && static_cast<size_t>(index) < m_inventory.size()) {
+            return m_inventory[index].get();
+        }
+        return nullptr;
+    }
+
+    void remove_item(int index) {
+        if (index >= 0 && static_cast<size_t>(index) < m_inventory.size()) {
+            m_inventory.erase(m_inventory.begin() + index);
+        }
+    }
+
+    Weapon* get_equipped_weapon() {
+        return m_weapon.get();
+    }
+
+    void destroy_equipped() {
+        m_weapon = nullptr;
     }
 
     virtual void level_up() {
@@ -73,7 +97,8 @@ public:
 
     void add_item(unique_ptr<Item> item);       
     void open_inventory();           
-    void equip(unique_ptr<Weapon> newWeapon);   
+    void equip(unique_ptr<Weapon> newWeapon);  
+    void unequip(); 
 
     string get_name() const { return m_name; }
     int get_HP() const { return m_currentHP; }

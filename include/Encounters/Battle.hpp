@@ -1,10 +1,11 @@
-#ifndef BATTLE_H
-#define BATTLE_H
+#ifndef BATTLE_HPP
+#define BATTLE_HPP
 
 #include "Encounter.h"
 #include "Enemy.h"
 #include "Utils.h"
 #include <iostream>
+#include <memory>
 
 using std::cout;
 using std::string;
@@ -28,7 +29,7 @@ public:
     void run(unique_ptr<Character>& player) override {
         // Initialize Enemy
         Enemy::MobType type = static_cast<Enemy::MobType>(random_int(0, 2));
-        Enemy* enemy = new Enemy(m_floor, type);
+        std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(m_floor, type);
         
         cout << "A " << enemy->get_type_name() << " appears! Do try to make this entertaining.\n";
 
@@ -99,7 +100,7 @@ public:
 
                 if (choice == 1) {
                     if (player->get_weapon() != nullptr) {
-                        player->get_weapon()->attack_action(player.get(), enemy);
+                        player->get_weapon()->attack_action(player.get(), enemy.get());
                     } 
                     else {
                         int dmg = random_int(player->get_power(), player->get_power() + 5);
@@ -108,7 +109,7 @@ public:
                     }
                 } 
                 else if (choice == 2) {
-                    player->use_special_ability(enemy);
+                    player->use_special_ability(enemy.get());
                 } 
                 else if (choice == 3) {
                     player->defend();
@@ -117,8 +118,8 @@ public:
                     if (player->try_run()) {
                         cout << "You escaped successfully!\n";
                         battleOver = true;
-                        delete enemy;
-                        return; 
+                        cout << "\n--- Encounter finished ---\n";
+                        return;
                     } else {
                         cout << "Failed to escape!\n";
                     }
@@ -158,7 +159,7 @@ public:
         }
         
         player->apply_passive_end_battle();
-        delete enemy;
+        cout << "\n--- Encounter finished ---\n";
     }
 };
 

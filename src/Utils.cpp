@@ -37,7 +37,7 @@ void print_stats(const Character* player) {
 
 void print_tutorial() {
     cout << "\n================================================================\n";
-    cout << "              ⚔️  DAGGERS & FLIPFLOPS: SURVIVAL GUIDE 🩴         \n";
+    cout << "               DAGGERS & FLIPFLOPS: SURVIVAL GUIDE          \n";
     cout << "================================================================\n";
     
     cout << "\n[ OBJECTIVE ]\n";

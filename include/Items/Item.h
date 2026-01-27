@@ -24,6 +24,7 @@ public:
     int get_tier() const { return m_tier; }
     int get_weight() const { return m_weight; } 
     int get_price() const { return m_price; }
+    virtual std::string get_description() const { return ""; }
     
     virtual bool use(Character* owner) = 0;
 };

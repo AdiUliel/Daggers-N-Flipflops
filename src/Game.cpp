@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "GameManager.h"
 #include "Utils.h" 
+#include "Crafting.h"
 #include <cstdlib> 
 #include <ctime> 
 #include <iostream>
@@ -32,6 +33,7 @@ void Game::mainLoop() {
         m_currentSession = nullptr;
 
         while(true) { 
+            Crafting::init();
             cout << "\n--- MAIN MENU ---\n";
             
             string input = get_string("The session has ended. Do you want to start a NEW GAME? (y/n): ");

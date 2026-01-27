@@ -9,7 +9,7 @@ class HealthPotion : public Item {
 
 public:
     HealthPotion(int healAmount) 
-        : Item("Health Potion", "Common", 1 ,1, 10), m_healAmount(healAmount) {}
+        : Item("Health Potion", "Consumable", 1 ,1, 10), m_healAmount(healAmount) {}
 
     bool use(Character* owner) override {
         std::cout << "You drank the potion. Glug glug.\n";
