@@ -7,7 +7,7 @@
 
 class Flipflops : public Weapon {
 public:
-    Flipflops() : Weapon("La Chancla", 666, 100, 50, 0) {}
+    Flipflops() : Weapon("Grandma's Flipflops", 666, 100, 50, 0) {}
 
     std::string get_action_name(Character* user) const override {
         (void)user;

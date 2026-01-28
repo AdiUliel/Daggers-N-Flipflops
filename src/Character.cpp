@@ -110,7 +110,8 @@ void Character::take_damage(int amount) {
 }
 
 bool Character::try_run() {
-    return random_int(1, 100) <= 50;
+    // Default escape chance is modest; some classes can override it.
+    return random_int(1, 100) <= 40;
 }
 
 void Character::open_inventory() {

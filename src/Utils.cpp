@@ -51,10 +51,10 @@ void print_tutorial() {
     cout << "\n[ CLASSES - KNOW YOUR HERO ]\n";
     cout << " * Warrior: High HP & Defense. Can STUN enemies.\n";
     cout << " * Mage:    Low HP, High Magic. Can HEAL self. Needs Mana Potions!\n";
-    cout << " * Archer:  Attacks FIRST. High Critical Hit chance.\n";
-    cout << " * Thief:   High DODGE chance. Can escape battles 100% of the time.\n";
+    cout << " * Archer:  Usually acts FIRST. High Critical Hit chance.\n";
+    cout << " * Thief:   High DODGE chance. Better chance to escape battles.\n";
     cout << " * Normie:  Starts weak, but has HUGE INVENTORY (Big Pockets).\n";
-    cout << "            Can call 'The Boys' for backup (insta-kill after delay).\n";
+    cout << "            Can call 'The Boys' for backup (big damage after a delay).\n";
 
     cout << "\n[ MECHANICS ]\n";
     cout << " * WEIGHT SYSTEM: You cannot carry everything! Stronger weapons are heavy.\n";
@@ -128,14 +128,14 @@ void print_class_details(const string& className) {
         cout << " | Difficulty: Easy\n";
         cout << " | \n";
         cout << " | [STATS]\n";
-        cout << " |  > HP:    180 (Highest base HP)\n";
-        cout << " |  > MP:    20  (Low)\n";
+        cout << " |  > HP:    160 (Highest base HP)\n";
+        cout << " |  > MP:    25  (Low)\n";
         cout << " | \n";
         cout << " | [ABILITIES]\n";
         cout << " |  > Active:  BATTLE ROAR (Cost: 10 MP)\n";
-        cout << " |             Deals damage AND stuns the enemy for 1 turn.\n";
-        cout << " |  > Passive: IRON SKIN\n";
-        cout << " |             Reduces all incoming physical damage.\n";
+        cout << " |             Deals damage (Power/2) and stuns the enemy for 1 turn.\n";
+        cout << " |  > Passive: IRON SKIN (Planned)\n";
+        cout << " |             (Not implemented yet)\n";
     }
     else if (className == "Mage") {
         cout << " [ MAGE ] - The Glass Cannon\n";
@@ -143,14 +143,14 @@ void print_class_details(const string& className) {
         cout << " | Difficulty: Hard\n";
         cout << " | \n";
         cout << " | [STATS]\n";
-        cout << " |  > HP:    90  (Very Low - Careful!)\n";
-        cout << " |  > MP:    100 (Highest)\n";
+        cout << " |  > HP:    105 (Low)\n";
+        cout << " |  > MP:    80  (Highest)\n";
         cout << " | \n";
         cout << " | [ABILITIES]\n";
         cout << " |  > Active:  HEAL (Cost: 20 MP)\n";
-        cout << " |             Restores HP during battle. Essential for survival.\n";
+        cout << " |             Restores HP equal to Power*2.\n";
         cout << " |  > Passive: MANA REGEN\n";
-        cout << " |             Fully restores MP after every battle automatically.\n";
+        cout << " |             Fully restores MP after every battle.\n";
     }
     else if (className == "Archer") {
         cout << " [ ARCHER ] - The Sniper\n";
@@ -158,14 +158,14 @@ void print_class_details(const string& className) {
         cout << " | Difficulty: Medium\n";
         cout << " | \n";
         cout << " | [STATS]\n";
-        cout << " |  > HP:    120 (Balanced)\n";
-        cout << " |  > MP:    40  (Medium)\n";
+        cout << " |  > HP:    115 (Balanced)\n"; 
+        cout << " |  > MP:    25  (Low-Mid)\n"; 
         cout << " | \n";
         cout << " | [ABILITIES]\n";
         cout << " |  > Active:  HEADSHOT (Cost: 15 MP)\n";
-        cout << " |             Deals massive Critical Damage (x2 or x3).\n";
+        cout << " |             Deals damage equal to Power*2.\n";
         cout << " |  > Passive: QUICK DRAW\n";
-        cout << " |             You always attack FIRST, even if the enemy is faster.\n";
+        cout << " |             Often attacks first (handled in Battle logic).\n";
     }
     else if (className == "Thief") {
         cout << " [ THIEF ] - The Gambler\n";
@@ -174,13 +174,13 @@ void print_class_details(const string& className) {
         cout << " | \n";
         cout << " | [STATS]\n";
         cout << " |  > HP:    110 (Low-Mid)\n";
-        cout << " |  > MP:    50  (Balanced)\n";
+        cout << " |  > MP:    30  (Balanced)\n"; 
         cout << " | \n";
         cout << " | [ABILITIES]\n";
         cout << " |  > Active:  SHADOWFIGHT (Cost: 15 MP)\n";
-        cout << " |             Gain 50% Dodge chance for the next 2 turns.\n";
+        cout << " |             Increases dodge chance for the next 2 turns.\n";
         cout << " |  > Passive: ESCAPE ARTIST\n";
-        cout << " |             100% chance to run away from battles (except Bosses).\n";
+        cout << " |             High chance to escape battles (75%).\n";
     }
     else if (className == "Normie") {
         cout << " [ NORMIE ] - The Hoarder\n";
@@ -188,16 +188,16 @@ void print_class_details(const string& className) {
         cout << " | Difficulty: VERY HARD (Early Game)\n";
         cout << " | \n";
         cout << " | [STATS]\n";
-        cout << " |  > HP:    100 (Average)\n";
-        cout << " |  > MP:    0   (Starts with 0)\n";
+        cout << " |  > HP:    90  (Low)\n";  
+        cout << " |  > MP:    0   (None)\n";
         cout << " | \n";
         cout << " | [ABILITIES]\n";
-        cout << " |  > Active:  CALL THE BOYS (Cost: 50 Energy)\n";
-        cout << " |             Calls for backup. Arrives in 3 turns and Insta-Kills enemy.\n";
+        cout << " |  > Active:  CALL THE BOYS\n";
+        cout << " |             Backup arrives in 3 turns.\n";
         cout << " |  > Passive: BIG POCKETS\n";
-        cout << " |             Inventory capacity increases significantly every Level Up.\n";
+        cout << " |             Inventory capacity increases by +10 every level up.\n";
     }
-    
+
     cout << "==================================================\n";
 }
 

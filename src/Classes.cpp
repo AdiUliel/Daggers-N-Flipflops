@@ -7,22 +7,27 @@ using std::string;
 
 vector<string> all_classes = { "Warrior", "Mage", "Archer", "Thief", "Normie" };
 
-// Warrior: HP=180, Power=11, MP=30
-Warrior::Warrior(const string& name) : Character(name, 180, 11, 30) {}
+// Warrior: High HP + control, average damage
+// HP=160, Power=10, MP=25
+Warrior::Warrior(const string& name) : Character(name, 160, 10, 25) {}
 string Warrior::get_class_name() const { return "Warrior"; }
 
-// Mage: HP=90, Power=7, MP=50
-Mage::Mage(const string& name) : Character(name, 90, 7, 50) {}
+// Mage: Lower HP, scales via MP (more special usage)
+// HP=105, Power=8, MP=80
+Mage::Mage(const string& name) : Character(name, 105, 8, 80) {}
 string Mage::get_class_name() const { return "Mage"; }
 
-// Archer: HP=120, Power=9, MP=30
-Archer::Archer(const string& name) : Character(name, 100, 9, 30) {}
+// Archer: Faster opener, consistent damage
+// HP=115, Power=10, MP=25
+Archer::Archer(const string& name) : Character(name, 115, 10, 25) {}
 string Archer::get_class_name() const { return "Archer"; }
 
-// Thief: HP=110, Power=8, MP=30
-Thief::Thief(const string& name) : Character(name, 90, 8, 30) {}
+// Thief: Mobility + dodge utility, slightly lower raw stats than Warrior/Archer
+// HP=110, Power=9, MP=30
+Thief::Thief(const string& name) : Character(name, 110, 9, 30) {}
 string Thief::get_class_name() const { return "Thief"; }
 
-// Normie: HP=80, Power=5, MP=30
-Normie::Normie(const string& name) : Character(name, 80, 5, 0, 30) {}
+// Normie: Weak start, strong progression via inventory/crafting
+// HP=90, Power=6, MP=0, Capacity=30
+Normie::Normie(const string& name) : Character(name, 90, 6, 0, 30) {}
 string Normie::get_class_name() const { return "Normie"; }

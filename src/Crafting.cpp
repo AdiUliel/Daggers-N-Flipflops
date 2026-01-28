@@ -53,7 +53,6 @@ unique_ptr<Item> Crafting::try_craft(Item* item1, Item* item2) {
 void Crafting::init() {
     if (!recipes.empty()) return; 
 
-    // --- SWORD COMBINATIONS ---
     recipes["Hammer+Sword"] = {"Battle Axe", 25, 12, "A heavy blade that crushes and slices."};
     recipes["Bow+Sword"] = {"Bladed Bow", 18, 6, "Good for shooting, great for stabbing."};
     recipes["Crossbow+Sword"] = {"Bayonet Crossbow", 22, 10, "Pointy end goes into the enemy."};
@@ -64,7 +63,6 @@ void Crafting::init() {
     recipes["Frying Pan+Sword"] = {"Broadsword", 20, 10, "It's wide enough to cook on."};
     recipes["Marbles+Sword"] = {"Caltrops", 10, 2, "Lego bricks made of steel."};
 
-    // --- HAMMER COMBINATIONS ---
     recipes["Bow+Hammer"] = {"Greatbow", 30, 15, "Requires massive strength to draw."};
     recipes["Crossbow+Hammer"] = {"Siege Ballista", 40, 20, "Takes forever to load, but hits like a truck."};
     recipes["Hammer+Staff"] = {"Warhammer", 35, 14, "For when you really hate walls."};
@@ -74,7 +72,6 @@ void Crafting::init() {
     recipes["Frying Pan+Hammer"] = {"Tenderizer", 15, 8, "Makes enemies soft and squishy."};
     recipes["Hammer+Marbles"] = {"Flail", 25, 10, "Unpredictable swinging death."};
     
-    // --- BOW COMBINATIONS ---
     recipes["Bow+Crossbow"] = {"Compound Bow", 25, 8, "High-tech pulleys reduce the effort."};
     recipes["Bow+Dagger"] = {"Wrist Bow", 18, 3, "Hidden up your sleeve. Assassin style."};
     recipes["Bow+Frying Pan"] = {"Shield Bow", 20, 9, "The pan protects your face while you aim."};
@@ -83,7 +80,6 @@ void Crafting::init() {
     recipes["Bow+Throwing Stars"] = {"Ricochet Bow", 18, 4, "Shoots stars that bounce off walls."};
     recipes["Bow+Wand"] = {"Energy Bow", 28, 4, "No strings attached. Literally."};
 
-    // --- CROSSBOW COMBINATIONS ---
     recipes["Crossbow+Dagger"] = {"Grappling Hook", 15, 6, "Get over here!"};
     recipes["Crossbow+Frying Pan"] = {"Armored Turret", 30, 18, "Heavy, stationary, and terrifying."};
     recipes["Crossbow+Marbles"] = {"Blunderbuss", 32, 10, "Shoots a spray of glass shrapnel."};
@@ -91,25 +87,21 @@ void Crafting::init() {
     recipes["Crossbow+Throwing Stars"] = {"Disc Launcher", 26, 8, "Pew Pew! Shoots spinning blades."};
     recipes["Crossbow+Wand"] = {"Railgun", 50, 15, "Uses magic magnets to accelerate projectiles."};
 
-    // --- DAGGER COMBINATIONS ---
     recipes["Dagger+Frying Pan"] = {"Chef's Knife", 20, 7, "Yes, Chef!"};
     recipes["Dagger+Marbles"] = {"Trap Kit", 15, 3, "Broken glass and marbles on the floor."};
     recipes["Dagger+Staff"] = {"Scythe", 28, 8, "The Grim Reaper called, he wants his stick back."};
     recipes["Dagger+Throwing Stars"] = {"Chain Kunai", 18, 4, "Get over here! (Wait, used that already?)"};
     recipes["Dagger+Wand"] = {"Ritual Knife", 22, 3, "It glows with a sinister purple light."};
 
-    // --- FRYING PAN COMBINATIONS ---
     recipes["Frying Pan+Marbles"] = {"Popcorn Machine", 40, 6, "Hot oil and exploding glass balls."};
     recipes["Frying Pan+Staff"] = {"Pizza Peel", 25, 9, "Fresh out of the oven! Deals burn damage."};
     recipes["Frying Pan+Throwing Stars"] = {"Saw Blade", 30, 8, "A jagged metal disk."};
     recipes["Frying Pan+Wand"] = {"Fireball Racket", 32, 7, "Serve straight into their face."};
 
-    // --- STAFF COMBINATIONS ---
     recipes["Marbles+Staff"] = {"Orb Staff", 20, 6, "Ponder the orb while you whack goblins."};
     recipes["Staff+Throwing Stars"] = {"Wind Spinner", 22, 6, "A double-ended baton of slicing."};
     recipes["Staff+Wand"] = {"Archmage Staff", 40, 5, "Unlimited power!"};
 
-    // --- OTHERS ---
     recipes["Marbles+Sword"] = {"Caltrops", 12, 4, "Lego bricks made of steel."};
     recipes["Marbles+Throwing Stars"] = {"Smoke Bombs", 10, 2, "Ninja vanish!"};
     recipes["Marbles+Wand"] = {"Floating Orbs", 24, 3, "They spin around you menacingly."};

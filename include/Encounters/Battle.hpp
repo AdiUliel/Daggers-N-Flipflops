@@ -5,7 +5,6 @@
 #include "Enemy.h"
 #include "Utils.h"
 #include <iostream>
-#include <memory>
 
 using std::cout;
 using std::string;
@@ -29,7 +28,7 @@ public:
     void run(unique_ptr<Character>& player) override {
         // Initialize Enemy
         Enemy::MobType type = static_cast<Enemy::MobType>(random_int(0, 2));
-        std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(m_floor, type);
+        Enemy* enemy = new Enemy(m_floor, type);
         
         cout << "A " << enemy->get_type_name() << " appears! Do try to make this entertaining.\n";
 
@@ -41,9 +40,18 @@ public:
         cout << "\n--- BATTLE START ---\n";
         
         if (player->get_class_name() != "Archer") {
-             if (random_int(0, 1) == 0) playerTurn = false;
+            // 50/50 initiative for most classes
+            if (random_int(0, 1) == 0) playerTurn = false;
         } else {
-             cout << "[Passive] Archer Quick Draw active! You shoot first.\n";
+            // Archer: usually starts first, but not guaranteed (balance)
+            bool hasWeapon = (player->get_weapon() != nullptr);
+            int quickDrawChance = hasWeapon ? 75 : 60;
+            if (random_int(1, 100) <= quickDrawChance) {
+                cout << "[Passive] Archer Quick Draw! You shoot first.\n";
+            } else {
+                cout << "[Passive] Archer Quick Draw failed.\n";
+                playerTurn = false;
+            }
         }
 
         if (playerTurn) cout << ">> " << player->get_name() << " goes first!\n";
@@ -63,8 +71,12 @@ public:
                     
                     if (player->get_backup_timer() == 0) {
                         cout << "\n*** THE BOYS HAVE ARRIVED! ***\n";
-                        cout << "A van pulls up and beats the enemy!\n";
-                        enemy->damage(player->get_power() * 10);
+                        cout << "A van pulls up and jumps the enemy!\n";
+                        // Balance: big moment, but not a guaranteed nuke.
+                        // Deal ~35% of enemy max HP (minimum 15).
+                        int boysDmg = (enemy->get_maxHP() * 35) / 100;
+                        if (boysDmg < 15) boysDmg = 15;
+                        enemy->damage(boysDmg);
                         player->reset_backup_timer();
 
                         if (enemy->isKnockedOut()) {
@@ -100,7 +112,7 @@ public:
 
                 if (choice == 1) {
                     if (player->get_weapon() != nullptr) {
-                        player->get_weapon()->attack_action(player.get(), enemy.get());
+                        player->get_weapon()->attack_action(player.get(), enemy);
                     } 
                     else {
                         int dmg = random_int(player->get_power(), player->get_power() + 5);
@@ -109,7 +121,7 @@ public:
                     }
                 } 
                 else if (choice == 2) {
-                    player->use_special_ability(enemy.get());
+                    player->use_special_ability(enemy);
                 } 
                 else if (choice == 3) {
                     player->defend();
@@ -118,10 +130,18 @@ public:
                     if (player->try_run()) {
                         cout << "You escaped successfully!\n";
                         battleOver = true;
-                        cout << "\n--- Encounter finished ---\n";
-                        return;
+                        delete enemy;
+                        return; 
                     } else {
                         cout << "Failed to escape!\n";
+                        // Balance: a failed escape attempt is risky.
+                        int partingShot = enemy->attack() / 2;
+                        if (partingShot < 1) partingShot = 1;
+                        cout << "The enemy punishes your attempt to flee for " << partingShot << " damage.\n";
+                        player->take_damage(partingShot);
+                        if (player->isKnockedOut()) {
+                            battleOver = true;
+                        }
                     }
                 } 
                 else {
@@ -141,7 +161,9 @@ public:
                 // Enemy's turn
                 if (enemy->is_stunned()) {
                     cout << "Enemy is STUNNED and cannot move this turn!\n";
-                    enemy->apply_stun(0); 
+                    int nextStun = enemy->get_stun_duration() - 1;
+                    if (nextStun < 0) nextStun = 0;
+                    enemy->apply_stun(nextStun);
                 } else {
                     int dmg = enemy->attack();
                     cout << "Enemy hits you for " << dmg << ".\n";
@@ -159,7 +181,7 @@ public:
         }
         
         player->apply_passive_end_battle();
-        cout << "\n--- Encounter finished ---\n";
+        delete enemy;
     }
 };
 

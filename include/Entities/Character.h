@@ -107,6 +107,7 @@ public:
     int get_MP() const { return m_currentMP; }
     Weapon* get_weapon() const { return m_weapon.get(); }
     bool is_stunned() const { return m_stunDuration > 0; }
+    int get_stun_duration() const { return m_stunDuration; }
     void apply_stun(int turns) { m_stunDuration = turns; }
     int get_backup_timer() { return m_normieBackupTimer; }
     void decrease_backup_timer() { m_normieBackupTimer--; }

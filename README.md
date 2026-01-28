@@ -1,26 +1,44 @@
 # ⚔️ Daggers & Flipflops 🩴
 **A Text-Based C++ RPG Adventure**
 
-Welcome to the Endless Tower. Fight monsters, collect loot, manage your inventory weight, and try not to die (spoiler: you will).
+Welcome to the Endless Tower. Fight monsters, collect loot, manage your inventory weight, craft ridiculous weapons, and try not to die.
+(Spoiler: The narrator hates you, and you will die).
 
 ## 📂 Project Structure
-The project follows a clean `src/include` separation:
+The project follows a clean `src/include` separation with a Data-Driven crafting system:
 
 ```text
 Daggers-N-Flipflops/
 │
 ├── bin/                 # Compiled executable (game.exe)
-├── src/                 # Source files (.cpp) - Main logic implementation
+├── src/                 # Source files (.cpp) - Includes Main, Logic & Crafting Registry
 └── include/             # Header files (.h / .hpp)
-    ├── Core/            # Game loop, Utils, GameManager
-    ├── Encounters/      # Battle, Shop, WildCard logic
-    ├── Entities/        # Character base, Enemy, Player Classes
-    └── Items/           # Item base class
-        ├── Potions/     # Health & Mana potions
-        └── Weapons/     # All weapon classes (Sword, Bow, Flipflops...)
+    ├── Core/            # Game Engine & Systems
+    │   ├── Crafting.h       # Recipe system & Item combination logic
+    │   ├── GameManager.h    # State machine & flow controller
+    │   └── Utils.h          # RNG & Helper functions
+    │
+    ├── Encounters/      # Game Events (Polymorphic Base: Encounter)
+    │   ├── Battle.hpp       # Turn-based combat system
+    │   ├── Blacksmith.hpp   # Crafting UI & Interaction
+    │   ├── Shop.hpp         # Economy & Purchasing
+    │   └── WildCard.hpp     # Random events & Narrator interactions
+    │
+    ├── Entities/        # Actors (Polymorphic Base: Character)
+    │   ├── Classes.h        # Player specializations (Warrior, Normie, etc.)
+    │   └── Enemy.h          # AI Logic
+    │
+    └── Items/           # Inventory Objects (Polymorphic Base: Item)
+        ├── Potions/     # Consumables (Health/Mana)
+        └── Weapons/     # Strategy Pattern Implementations
+            ├── BetterWeapon.hpp # Generic wrapper for Crafted/Tier-2 items
+            ├── Flipflops.hpp    # The ultimate weapon
+            └── [Specific Weapons like Sword, Bow, Staff...]
 ```
+
 ## Compiling Command:
-g++ -std=c++14 -static -Wall -Wextra -I./include/Core -I./include/Encounters -I./include/Entities -I./include/Items -I./include/Items/Potions -I./include/Items/Weapons -o bin/game.exe src/*.cpp
+g++ -static -std=c++14 -O2 -Wall -Wextra src/*.cpp -o bin/game.exe -Iinclude/Core -Iinclude/Encounters -Iinclude/Entities -Iinclude/Items -Iinclude/Items/Potions -Iinclude/Items/Weapons
+
 ## Run:
 ./bin/game.exe
 
@@ -30,15 +48,17 @@ g++ -std=c++14 -static -Wall -Wextra -I./include/Core -I./include/Encounters -I.
     - Mage: High Magic, self-healing.
     - Archer: High Crit, always attacks first.
     - Thief: High Dodge chance, can escape battles.
-    - Normie: Starts weak, but has Big Pockets (Huge inventory) and can call for backup (The Boys).
+    - Normie: Starts weak, but has Big Pockets (Huge inventory) and can call for backup.
 
 Strategic Combat: Choose between Attacking, Defending, Using Abilities, or Items.
 
 Inventory System: Manage your Weight Capacity. Stronger items are heavier!
 
-Random Encounters: Battles, Shops, and "Wildcard" events.
+Random Encounters: Battles, Shops, Crafting, and "Wildcard" events.
 
 Loot & Economy: Earn coins, buy potions, and find legendary weapons (like La Chancla).
+
+Blacksmith Encounter: Allows the player to upgrade existing weapons by combining them.
 
 ## 🛠️ Technical Architecture
 ```text
@@ -48,6 +68,8 @@ Game.cpp (Main)
 GameManager (Controller)
    │
    ├──▶ Utils
+   │
+   ├──▶ Crafting
    │
    ├──▶ Encounter (Base Class [ABSTRACT])
    │       ▲
@@ -62,9 +84,10 @@ GameManager (Controller)
    │
    └──▶ Item (Base Class [ABSTRACT])
            ▲
-           ├──▶ HealthPotion
-           │
-           ├──▶ ManaPotion
+           ├──▶ Potions
+           |       ▲
+           |       ├──▶ HealthPotion
+           |       └──▶ ManaPotion
            │
            └──▶ Weapon (Strategy [ABSTRACT])
                    ▲
